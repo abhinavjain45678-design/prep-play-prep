@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { getDisasterById, Choice, Scenario } from "@/data/disasters";
+import { getExpandedDisasterById } from "@/data/expandedDisasters";
 import { CheckCircle, XCircle, Clock, Trophy, AlertTriangle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -19,7 +19,7 @@ export default function Simulation() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const disaster = id ? getDisasterById(id) : null;
+  const disaster = id ? getExpandedDisasterById(id) : null;
 
   useEffect(() => {
     if (!disaster) {
@@ -34,7 +34,7 @@ export default function Simulation() {
   const currentScenario = disaster.scenarios[currentScenarioIndex];
   const progress = ((currentScenarioIndex + (showFeedback ? 1 : 0)) / disaster.scenarios.length) * 100;
 
-  const handleChoiceSelect = (choice: Choice) => {
+  const handleChoiceSelect = (choice: any) => {
     setSelectedChoice(choice.id);
     setShowFeedback(true);
     if (choice.isCorrect) {
