@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Zap, Flame, Waves, Brain, Phone, BarChart3, Play, BookOpen, Users } from "lucide-react";
+import { Shield, Zap, Flame, Waves, Brain, Phone, BarChart3, Play, BookOpen, Users, Satellite } from "lucide-react";
 import mainHeroImage from "@/assets/main-hero.jpg";
 
 export default function Index() {
@@ -35,6 +35,14 @@ export default function Index() {
         ? "Create and download personalized emergency contact cards"
         : "व्यक्तिगत आपातकालीन संपर्क कार्ड बनाएं और डाउनलोड करें",
       path: "/emergency"
+    },
+    {
+      icon: <Satellite className="w-8 h-8" />,
+      title: language === "en" ? "Government Alerts" : "सरकारी अलर्ट",
+      description: language === "en" 
+        ? "Real-time disaster alerts from official Indian government sources"
+        : "आधिकारिक भारतीय सरकारी स्रोतों से वास्तविक समय आपदा अलर्ट",
+      path: "/government-alerts"
     },
     {
       icon: <BarChart3 className="w-8 h-8" />,
@@ -200,7 +208,7 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {features.map((feature, index) => (
               <Card 
                 key={index}

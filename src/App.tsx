@@ -9,6 +9,7 @@ import Simulation from "./pages/Simulation";
 import Quiz from "./pages/Quiz";
 import Emergency from "./pages/Emergency";
 import Admin from "./pages/Admin";
+import GovernmentAlerts from "./pages/GovernmentAlerts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/emergency" element={<Emergency />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/government-alerts" element={<GovernmentAlerts />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
