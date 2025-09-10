@@ -4,52 +4,84 @@ import { Box, Plane, OrbitControls, Cylinder } from "@react-three/drei";
 import * as THREE from "three";
 
 function TornadoFunnel() {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const funnelRef = useRef<THREE.Mesh>(null);
   const particlesRef = useRef<THREE.Group>(null);
+  const innerFunnelRef = useRef<THREE.Mesh>(null);
   
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.1;
+    if (funnelRef.current) {
+      funnelRef.current.rotation.y += 0.08;
+    }
+    
+    if (innerFunnelRef.current) {
+      innerFunnelRef.current.rotation.y -= 0.12;
     }
     
     if (particlesRef.current) {
-      particlesRef.current.rotation.y += 0.15;
+      const time = state.clock.elapsedTime;
       particlesRef.current.children.forEach((child, i) => {
-        child.rotation.y += 0.05;
-        const radius = 2 + Math.sin(state.clock.elapsedTime + i) * 0.5;
-        const height = (i / particlesRef.current!.children.length) * 8;
-        child.position.x = Math.cos(state.clock.elapsedTime * 2 + i) * radius;
-        child.position.z = Math.sin(state.clock.elapsedTime * 2 + i) * radius;
+        const radius = 1.5 + Math.sin(time + i) * 0.5;
+        const angle = time * 3 + i * 0.8;
+        const height = (time * 2.5 + i * 0.5) % 10;
+        
+        child.position.x = Math.cos(angle) * radius;
+        child.position.z = Math.sin(angle) * radius;
         child.position.y = height;
+        child.rotation.set(
+          time + i,
+          time * 2 + i,
+          time * 1.5 + i
+        );
       });
     }
   });
 
   const debris = useMemo(() => {
-    return Array.from({ length: 20 }, (_, i) => (
+    return Array.from({ length: 30 }, (_, i) => (
       <Box
         key={i}
-        args={[0.2, 0.2, 0.2]}
-        position={[0, i * 0.4, 0]}
+        position={[0, 0, 0]}
+        args={[0.15 + Math.random() * 0.2, 0.15 + Math.random() * 0.2, 0.15 + Math.random() * 0.2]}
+        castShadow
       >
-        <meshStandardMaterial color={Math.random() > 0.5 ? "#8B4513" : "#654321"} />
+        <meshPhysicalMaterial 
+          color={Math.random() > 0.5 ? "#8B4513" : "#A0522D"} 
+          roughness={0.8}
+          metalness={0.1}
+        />
       </Box>
     ));
   }, []);
 
   return (
     <group>
-      {/* Main tornado funnel */}
+      {/* Outer tornado funnel */}
       <Cylinder
-        ref={meshRef}
-        position={[0, 4, 0]}
-        args={[3, 0.5, 8, 16]}
+        ref={funnelRef}
+        position={[0, 5, 0]}
+        args={[0.3, 2.5, 10]}
       >
-        <meshStandardMaterial 
-          color="#696969" 
+        <meshPhysicalMaterial 
+          color="#2F2F2F" 
+          transparent 
+          opacity={0.4}
+          roughness={0.9}
+          metalness={0.1}
+        />
+      </Cylinder>
+      
+      {/* Inner tornado funnel */}
+      <Cylinder
+        ref={innerFunnelRef}
+        position={[0, 5, 0]}
+        args={[0.1, 1.8, 10]}
+      >
+        <meshPhysicalMaterial 
+          color="#1A1A1A" 
           transparent 
           opacity={0.6}
-          side={THREE.DoubleSide}
+          roughness={0.7}
+          metalness={0.2}
         />
       </Cylinder>
       
@@ -57,6 +89,20 @@ function TornadoFunnel() {
       <group ref={particlesRef}>
         {debris}
       </group>
+      
+      {/* Enhanced dust cloud at base */}
+      <Cylinder
+        position={[0, 0.8, 0]}
+        args={[4, 4, 1.5]}
+      >
+        <meshPhysicalMaterial 
+          color="#8B7355" 
+          transparent 
+          opacity={0.3}
+          roughness={0.9}
+          metalness={0.0}
+        />
+      </Cylinder>
     </group>
   );
 }
@@ -171,26 +217,40 @@ function TornadoScene() {
 
   return (
     <>
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[10, 10, 5]} intensity={0.6} />
-      <pointLight position={[0, 8, 0]} intensity={1} color="#FFD700" />
+      <ambientLight intensity={0.2} />
+      <directionalLight 
+        position={[12, 15, 8]} 
+        intensity={0.8} 
+        castShadow 
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+      />
+      <pointLight position={[0, 8, 0]} intensity={0.4} color="#87CEEB" />
+      <fog attach="fog" args={["#696969", 8, 30]} />
       
       {/* Ground */}
       <Plane 
         position={[0, 0, 0]} 
         rotation={[-Math.PI / 2, 0, 0]} 
-        args={[30, 30]}
+        args={[25, 25]}
+        receiveShadow
       >
-        <meshStandardMaterial color="#228B22" />
+        <meshPhysicalMaterial 
+          color="#5D4E37" 
+          roughness={0.9}
+          metalness={0.0}
+        />
       </Plane>
       
       {/* Tornado */}
       <TornadoFunnel />
       
       {/* Damaged buildings */}
-      <DamagedBuilding position={[8, 1, 5]} />
-      <DamagedBuilding position={[-6, 1, -4]} />
-      <DamagedBuilding position={[10, 1, -3]} />
+      <DamagedBuilding position={[5, 1, 4]} />
+      <DamagedBuilding position={[-4, 1, -3]} />
+      <DamagedBuilding position={[3, 1, -5]} />
+      <DamagedBuilding position={[-5, 1, 2]} />
+      <DamagedBuilding position={[2, 1, 6]} />
       
       {/* Flying debris */}
       {flyingObjects.map((obj, i) => (
@@ -204,7 +264,7 @@ function TornadoScene() {
       {/* Wind effect lines */}
       <WindLines />
       
-      <OrbitControls enablePan={false} enableZoom={true} maxDistance={20} minDistance={8} />
+      <OrbitControls enablePan={false} enableZoom={true} maxDistance={20} minDistance={6} />
     </>
   );
 }
