@@ -10,6 +10,7 @@ import Quiz from "./pages/Quiz";
 import Emergency from "./pages/Emergency";
 import Admin from "./pages/Admin";
 import GovernmentAlerts from "./pages/GovernmentAlerts";
+import Achievements from "./pages/Achievements";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/emergency" element={<Emergency />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/government-alerts" element={<GovernmentAlerts />} />
+          <Route path="/achievements" element={<Achievements />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
