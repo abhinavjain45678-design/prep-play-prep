@@ -4,12 +4,14 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Zap, Flame, Waves, Brain, Phone, BarChart3, Play, BookOpen, Users, Satellite } from "lucide-react";
+import { Shield, Zap, Flame, Waves, Brain, Phone, BarChart3, Play, BookOpen, Users, Satellite, LogIn, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import mainHeroImage from "@/assets/main-hero.jpg";
 
 export default function Index() {
   const [language, setLanguage] = useState("en");
   const navigate = useNavigate();
+  const { isAuthenticated, signOut, user } = useAuth();
 
   const features = [
     {
@@ -94,6 +96,51 @@ export default function Index() {
     <div className="min-h-screen">
       <Header onLanguageChange={setLanguage} currentLanguage={language} />
       
+      {/* Auth Status Bar */}
+      {!isAuthenticated && (
+        <div className="bg-primary/10 border-b border-primary/20 py-3">
+          <div className="container mx-auto px-4 flex items-center justify-between">
+            <p className="text-sm text-primary">
+              {language === "en" 
+                ? "Sign in to access emergency features and disaster alerts" 
+                : "आपातकालीन सुविधाओं और आपदा अलर्ट तक पहुंचने के लिए साइन इन करें"
+              }
+            </p>
+            <Button 
+              onClick={() => navigate("/auth")} 
+              variant="outline" 
+              size="sm"
+              className="border-primary text-primary hover:bg-primary hover:text-white"
+            >
+              <LogIn className="w-4 h-4 mr-2" />
+              {language === "en" ? "Sign In" : "साइन इन"}
+            </Button>
+          </div>
+        </div>
+      )}
+      
+      {isAuthenticated && (
+        <div className="bg-green-50 border-b border-green-200 py-3">
+          <div className="container mx-auto px-4 flex items-center justify-between">
+            <p className="text-sm text-green-800">
+              {language === "en" 
+                ? `Welcome back! You have access to all emergency features.` 
+                : `वापस स्वागत है! आपके पास सभी आपातकालीन सुविधाओं तक पहुंच है।`
+              }
+            </p>
+            <Button 
+              onClick={signOut} 
+              variant="outline" 
+              size="sm"
+              className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              {language === "en" ? "Sign Out" : "साइन आउट"}
+            </Button>
+          </div>
+        </div>
+      )}
+      
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
@@ -120,22 +167,36 @@ export default function Index() {
               }
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                onClick={() => navigate("/simulations")} 
-                variant="hero" 
-                size="xl"
-                className="text-lg px-8 animate-bounce-in"
-              >
-                {language === "en" ? "Start Learning" : "सीखना शुरू करें"}
-              </Button>
-              <Button 
-                onClick={() => navigate("/quiz")} 
-                variant="outline" 
-                size="xl"
-                className="text-lg px-8 bg-white/10 border-white/30 text-white hover:bg-white/20"
-              >
-                {language === "en" ? "Take Quiz" : "क्विज़ लें"}
-              </Button>
+              {isAuthenticated ? (
+                <>
+                  <Button 
+                    onClick={() => navigate("/simulations")} 
+                    variant="hero" 
+                    size="xl"
+                    className="text-lg px-8 animate-bounce-in"
+                  >
+                    {language === "en" ? "Start Learning" : "सीखना शुरू करें"}
+                  </Button>
+                  <Button 
+                    onClick={() => navigate("/emergency")} 
+                    variant="outline" 
+                    size="xl"
+                    className="text-lg px-8 bg-white/10 border-white/30 text-white hover:bg-white/20"
+                  >
+                    {language === "en" ? "Emergency Hub" : "आपातकालीन हब"}
+                  </Button>
+                </>
+              ) : (
+                <Button 
+                  onClick={() => navigate("/auth")} 
+                  variant="hero" 
+                  size="xl"
+                  className="text-lg px-8 animate-bounce-in"
+                >
+                  <LogIn className="w-5 h-5 mr-2" />
+                  {language === "en" ? "Sign In to Access" : "पहुंच के लिए साइन इन करें"}
+                </Button>
+              )}
             </div>
           </div>
         </div>

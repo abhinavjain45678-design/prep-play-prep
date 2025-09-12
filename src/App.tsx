@@ -12,6 +12,8 @@ import Admin from "./pages/Admin";
 import GovernmentAlerts from "./pages/GovernmentAlerts";
 import Achievements from "./pages/Achievements";
 import NotFound from "./pages/NotFound";
+import Auth from "./pages/Auth";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -23,13 +25,14 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/simulations" element={<Simulations />} />
-          <Route path="/simulation/:id" element={<Simulation />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/emergency" element={<Emergency />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/government-alerts" element={<GovernmentAlerts />} />
-          <Route path="/achievements" element={<Achievements />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/simulations" element={<ProtectedRoute><Simulations /></ProtectedRoute>} />
+          <Route path="/simulation/:id" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />
+          <Route path="/quiz" element={<ProtectedRoute><Quiz /></ProtectedRoute>} />
+          <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+          <Route path="/government-alerts" element={<ProtectedRoute><GovernmentAlerts /></ProtectedRoute>} />
+          <Route path="/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
