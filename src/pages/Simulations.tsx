@@ -4,10 +4,10 @@ import { Header } from "@/components/Header";
 import { DisasterCard } from "@/components/DisasterCard";
 import { expandedDisasters } from "@/data/expandedDisasters";
 import { Zap, Flame, Waves, Wind, Mountain, Snowflake, Droplets } from "lucide-react";
-import realEarthquake from "@/assets/real-earthquake.jpg";
-import realFire from "@/assets/real-fire.jpg";
-import realFlood from "@/assets/real-flood.jpg";
-import realTornado from "@/assets/real-tornado.jpg";
+import realEarthquake from "@/assets/real-earthquake-new.jpg";
+import realVolcano from "@/assets/real-volcano.jpg";
+import realFlood from "@/assets/real-flood-new.avif";
+import realCyclone from "@/assets/real-cyclone.webp";
 
 const iconMap = {
   earthquake: <Zap className="w-6 h-6" />,
@@ -71,22 +71,22 @@ export default function Simulations() {
               </p>
             </div>
             
-            <div className="space-y-4">
+              <div className="space-y-4">
               <h3 className="text-xl font-semibold flex items-center gap-2">
-                <Flame className="w-5 h-5 text-red-600" />
-                {language === "en" ? "Wildfire Destruction" : "जंगली आग विनाश"}
+                <Mountain className="w-5 h-5 text-red-600" />
+                {language === "en" ? "Volcanic Eruption" : "ज्वालामुखी विस्फोट"}
               </h3>
               <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
                 <img 
-                  src={realFire} 
-                  alt="Real wildfire with intense flames and smoke"
+                  src={realVolcano} 
+                  alt="Real volcanic eruption with lava and ash clouds"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <p className="text-sm text-muted-foreground">
                 {language === "en" 
-                  ? "Real wildfire showing the intensity and destructive power of uncontrolled flames."
-                  : "वास्तविक जंगली आग जो अनियंत्रित लपटों की तीव्रता और विनाशकारी शक्ति दिखाती है।"
+                  ? "Real volcanic eruption showing the immense power of molten lava and ash clouds."
+                  : "वास्तविक ज्वालामुखी विस्फोट जो पिघले लावा और राख के बादलों की अपार शक्ति दिखाता है।"
                 }
               </p>
             </div>
@@ -114,19 +114,19 @@ export default function Simulations() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold flex items-center gap-2">
                 <Wind className="w-5 h-5 text-gray-600" />
-                {language === "en" ? "Tornado Power" : "बवंडर शक्ति"}
+                {language === "en" ? "Cyclone Power" : "चक्रवात शक्ति"}
               </h3>
               <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
                 <img 
-                  src={realTornado} 
-                  alt="Real tornado funnel with destructive winds"
+                  src={realCyclone} 
+                  alt="Real cyclone from space showing massive spiral formation"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <p className="text-sm text-muted-foreground">
                 {language === "en" 
-                  ? "Real tornado showing the massive funnel cloud and destructive wind patterns."
-                  : "वास्तविक बवंडर जो विशाल फ़नल क्लाउड और विनाशकारी हवा के पैटर्न को दिखाता है।"
+                  ? "Real cyclone viewed from space showing the massive spiral formation and eye of the storm."
+                  : "अंतरिक्ष से देखा गया वास्तविक चक्रवात जो विशाल सर्पिल निर्माण और तूफान की आंख दिखाता है।"
                 }
               </p>
             </div>
