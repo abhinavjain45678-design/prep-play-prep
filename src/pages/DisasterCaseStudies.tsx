@@ -4,6 +4,18 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { CalendarDays, MapPin, Users, Building, AlertTriangle, Shield } from "lucide-react";
 
+// Import real disaster images
+import biharEarthquakeImg from "@/assets/case-studies/1934-bihar-earthquake.jpg";
+import bholaCycloneImg from "@/assets/case-studies/1970-bhola-cyclone.jpg";
+import odishaCycloneImg from "@/assets/case-studies/1999-odisha-cyclone.jpg";
+import gujaratEarthquakeImg from "@/assets/case-studies/2001-gujarat-earthquake.jpg";
+import tsunamiImg from "@/assets/case-studies/2004-indian-ocean-tsunami.avif";
+import biharFloodsImg from "@/assets/case-studies/2008-bihar-floods.jpg";
+import uttarakhandFloodsImg from "@/assets/case-studies/2013-uttarakhand-floods.jpg";
+import jammuKashmirFloodsImg from "@/assets/case-studies/2014-jammu-kashmir-floods.jpg";
+import cycloneMochaImg from "@/assets/case-studies/2023-cyclone-mocha.jpg";
+import kishtwarFloodsImg from "@/assets/case-studies/2025-kishtwar-floods.jpg";
+
 interface DisasterCaseStudy {
   id: string;
   title: string;
@@ -50,7 +62,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Critical role of building codes",
       "Early warning system requirements"
     ],
-    image: "/src/assets/earthquake-hero.jpg",
+    image: biharEarthquakeImg,
     severity: "Extreme"
   },
   {
@@ -81,7 +93,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Coastal vulnerability management",
       "Emergency evacuation procedures"
     ],
-    image: "/src/assets/tsunami-hero.jpg",
+    image: bholaCycloneImg,
     severity: "Extreme"
   },
   {
@@ -112,7 +124,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Importance of backup power systems",
       "Post-disaster reconstruction planning"
     ],
-    image: "/src/assets/tornado-hero.jpg",
+    image: odishaCycloneImg,
     severity: "Extreme"
   },
   {
@@ -143,7 +155,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Community participation in reconstruction",
       "Modern construction techniques adoption"
     ],
-    image: "/src/assets/earthquake-hero.jpg",
+    image: gujaratEarthquakeImg,
     severity: "Extreme"
   },
   {
@@ -174,7 +186,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Coastal disaster management protocols",
       "International coordination importance"
     ],
-    image: "/src/assets/tsunami-hero.jpg",
+    image: tsunamiImg,
     severity: "Extreme"
   },
   {
@@ -205,7 +217,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Proper urban planning in hill stations",
       "Emergency evacuation procedures for remote areas"
     ],
-    image: "/src/assets/flood-hero.jpg",
+    image: uttarakhandFloodsImg,
     severity: "High"
   },
   {
@@ -236,7 +248,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Early warning systems for urban areas",
       "Community preparedness programs"
     ],
-    image: "/src/assets/flood-hero.jpg",
+    image: jammuKashmirFloodsImg,
     severity: "High"
   },
   {
@@ -267,7 +279,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Early warning systems for river floods",
       "Rehabilitation and livelihood restoration"
     ],
-    image: "/src/assets/flood-hero.jpg",
+    image: biharFloodsImg,
     severity: "High"
   },
   {
@@ -298,7 +310,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Climate change impact on extreme weather events",
       "Community-based early warning systems"
     ],
-    image: "/src/assets/flood-hero.jpg",
+    image: kishtwarFloodsImg,
     severity: "Medium"
   },
   {
@@ -329,7 +341,7 @@ const disasterCaseStudies: DisasterCaseStudy[] = [
       "Importance of inter-agency coordination",
       "Community awareness and response training"
     ],
-    image: "/src/assets/tornado-hero.jpg",
+    image: cycloneMochaImg,
     severity: "Medium"
   }
 ];
