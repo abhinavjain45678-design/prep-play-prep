@@ -14,7 +14,192 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      disaster_alerts: {
+        Row: {
+          affected_regions: Json
+          alert_id: string
+          coordinates: Json | null
+          created_at: string
+          description: string
+          disaster_type: Database["public"]["Enums"]["disaster_type"]
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          issued_at: string
+          safety_instructions: string[]
+          severity: Database["public"]["Enums"]["alert_severity"]
+          source: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          affected_regions: Json
+          alert_id: string
+          coordinates?: Json | null
+          created_at?: string
+          description: string
+          disaster_type: Database["public"]["Enums"]["disaster_type"]
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          issued_at: string
+          safety_instructions: string[]
+          severity: Database["public"]["Enums"]["alert_severity"]
+          source: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          affected_regions?: Json
+          alert_id?: string
+          coordinates?: Json | null
+          created_at?: string
+          description?: string
+          disaster_type?: Database["public"]["Enums"]["disaster_type"]
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          issued_at?: string
+          safety_instructions?: string[]
+          severity?: Database["public"]["Enums"]["alert_severity"]
+          source?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      emergency_shelters: {
+        Row: {
+          address: string
+          capacity: number | null
+          city: string
+          contact_number: string | null
+          created_at: string
+          disaster_types: Database["public"]["Enums"]["disaster_type"][]
+          district: string
+          facilities: string[] | null
+          id: string
+          is_active: boolean
+          latitude: number
+          longitude: number
+          name: string
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          capacity?: number | null
+          city: string
+          contact_number?: string | null
+          created_at?: string
+          disaster_types: Database["public"]["Enums"]["disaster_type"][]
+          district: string
+          facilities?: string[] | null
+          id?: string
+          is_active?: boolean
+          latitude: number
+          longitude: number
+          name: string
+          state: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          capacity?: number | null
+          city?: string
+          contact_number?: string | null
+          created_at?: string
+          disaster_types?: Database["public"]["Enums"]["disaster_type"][]
+          district?: string
+          facilities?: string[] | null
+          id?: string
+          is_active?: boolean
+          latitude?: number
+          longitude?: number
+          name?: string
+          state?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      helpline_numbers: {
+        Row: {
+          created_at: string
+          disaster_type: Database["public"]["Enums"]["disaster_type"]
+          district: string | null
+          helpline_name: string
+          id: string
+          is_24x7: boolean | null
+          is_toll_free: boolean | null
+          phone_number: string
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          disaster_type: Database["public"]["Enums"]["disaster_type"]
+          district?: string | null
+          helpline_name: string
+          id?: string
+          is_24x7?: boolean | null
+          is_toll_free?: boolean | null
+          phone_number: string
+          state: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          disaster_type?: Database["public"]["Enums"]["disaster_type"]
+          district?: string | null
+          helpline_name?: string
+          id?: string
+          is_24x7?: boolean | null
+          is_toll_free?: boolean | null
+          phone_number?: string
+          state?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_alert_preferences: {
+        Row: {
+          alert_radius_km: number | null
+          created_at: string
+          disaster_types: Database["public"]["Enums"]["disaster_type"][]
+          email_notifications: boolean | null
+          id: string
+          location_lat: number | null
+          location_lng: number | null
+          push_notifications: boolean | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          alert_radius_km?: number | null
+          created_at?: string
+          disaster_types?: Database["public"]["Enums"]["disaster_type"][]
+          email_notifications?: boolean | null
+          id?: string
+          location_lat?: number | null
+          location_lng?: number | null
+          push_notifications?: boolean | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          alert_radius_km?: number | null
+          created_at?: string
+          disaster_types?: Database["public"]["Enums"]["disaster_type"][]
+          email_notifications?: boolean | null
+          id?: string
+          location_lat?: number | null
+          location_lng?: number | null
+          push_notifications?: boolean | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +208,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      alert_severity: "minor" | "moderate" | "severe" | "extreme"
+      disaster_type:
+        | "earthquake"
+        | "cyclone"
+        | "flood"
+        | "tsunami"
+        | "thunderstorm"
+        | "fire"
+        | "drought"
+        | "landslide"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +344,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      alert_severity: ["minor", "moderate", "severe", "extreme"],
+      disaster_type: [
+        "earthquake",
+        "cyclone",
+        "flood",
+        "tsunami",
+        "thunderstorm",
+        "fire",
+        "drought",
+        "landslide",
+      ],
+    },
   },
 } as const
