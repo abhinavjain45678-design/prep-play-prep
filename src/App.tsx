@@ -8,6 +8,7 @@ import Simulations from "./pages/Simulations";
 import Simulation from "./pages/Simulation";
 import Quiz from "./pages/Quiz";
 import Emergency from "./pages/Emergency";
+import EmergencyID from "./pages/EmergencyID";
 import Admin from "./pages/Admin";
 import GovernmentAlerts from "./pages/GovernmentAlerts";
 import DisasterCaseStudies from "./pages/DisasterCaseStudies";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/simulation/:id" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />
           <Route path="/quiz" element={<ProtectedRoute><Quiz /></ProtectedRoute>} />
           <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
+          <Route path="/emergency-id" element={<ProtectedRoute><EmergencyID /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           <Route path="/government-alerts" element={<ProtectedRoute><GovernmentAlerts /></ProtectedRoute>} />
           <Route path="/disaster-case-studies" element={<ProtectedRoute><DisasterCaseStudies /></ProtectedRoute>} />
