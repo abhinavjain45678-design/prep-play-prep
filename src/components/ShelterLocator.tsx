@@ -52,19 +52,7 @@ export default function ShelterLocator() {
 
       if (!existingData || existingData.length === 0) {
         const sampleShelters = [
-          {
-            name: 'Community Center Relief Camp',
-            address: 'Sector 15, Chandigarh',
-            state: 'Chandigarh',
-            district: 'Chandigarh',
-            city: 'Chandigarh',
-            latitude: 30.7333,
-            longitude: 76.7794,
-            capacity: 500,
-            contact_number: '+91-172-2749999',
-            facilities: ['medical', 'food', 'water', 'electricity'],
-            disaster_types: ['earthquake', 'flood', 'fire'] as DisasterType[]
-          },
+          // Major Cities - Primary Shelters
           {
             name: 'Red Cross Emergency Shelter',
             address: 'Marine Drive, Mumbai',
@@ -105,6 +93,19 @@ export default function ShelterLocator() {
             disaster_types: ['cyclone', 'flood', 'thunderstorm'] as DisasterType[]
           },
           {
+            name: 'Community Center Relief Camp',
+            address: 'Sector 15, Chandigarh',
+            state: 'Chandigarh',
+            district: 'Chandigarh',
+            city: 'Chandigarh',
+            latitude: 30.7333,
+            longitude: 76.7794,
+            capacity: 500,
+            contact_number: '+91-172-2749999',
+            facilities: ['medical', 'food', 'water', 'electricity'],
+            disaster_types: ['earthquake', 'flood', 'fire'] as DisasterType[]
+          },
+          {
             name: 'District Collector Office Shelter',
             address: 'Shivaji Nagar, Pune',
             state: 'Maharashtra',
@@ -116,6 +117,138 @@ export default function ShelterLocator() {
             contact_number: '+91-20-26123456',
             facilities: ['medical', 'food', 'water', 'electricity'],
             disaster_types: ['earthquake', 'flood', 'fire'] as DisasterType[]
+          },
+          
+          // High-Risk Areas - Specialized Shelters
+          {
+            name: 'Coastal Emergency Center',
+            address: 'Besant Nagar, Chennai',
+            state: 'Tamil Nadu',
+            district: 'Chennai',
+            city: 'Chennai',
+            latitude: 13.0827,
+            longitude: 80.2707,
+            capacity: 900,
+            contact_number: '+91-44-24471102',
+            facilities: ['medical', 'food', 'water', 'electricity', 'wifi'],
+            disaster_types: ['cyclone', 'tsunami', 'flood'] as DisasterType[]
+          },
+          {
+            name: 'Earthquake Relief Center',
+            address: 'Bhuj, Kutch',
+            state: 'Gujarat',
+            district: 'Kutch',
+            city: 'Bhuj',
+            latitude: 23.2420,
+            longitude: 69.6669,
+            capacity: 1200,
+            contact_number: '+91-2832-250500',
+            facilities: ['medical', 'food', 'water', 'electricity'],
+            disaster_types: ['earthquake', 'drought'] as DisasterType[]
+          },
+          {
+            name: 'Flood Relief Camp',
+            address: 'Kochi, Ernakulam',
+            state: 'Kerala',
+            district: 'Ernakulam',
+            city: 'Kochi',
+            latitude: 9.9312,
+            longitude: 76.2673,
+            capacity: 800,
+            contact_number: '+91-484-2356785',
+            facilities: ['medical', 'food', 'water', 'wifi'],
+            disaster_types: ['flood', 'thunderstorm'] as DisasterType[]
+          },
+          {
+            name: 'Cyclone Shelter Center',
+            address: 'Bhubaneswar',
+            state: 'Odisha',
+            district: 'Khordha',
+            city: 'Bhubaneswar',
+            latitude: 20.2961,
+            longitude: 85.8245,
+            capacity: 1500,
+            contact_number: '+91-674-2534177',
+            facilities: ['medical', 'food', 'water', 'electricity', 'wifi'],
+            disaster_types: ['cyclone', 'flood', 'thunderstorm'] as DisasterType[]
+          },
+          {
+            name: 'Hill Station Emergency Shelter',
+            address: 'Shimla, HP',
+            state: 'Himachal Pradesh',
+            district: 'Shimla',
+            city: 'Shimla',
+            latitude: 31.1048,
+            longitude: 77.1734,
+            capacity: 400,
+            contact_number: '+91-177-2628799',
+            facilities: ['medical', 'food', 'water', 'electricity'],
+            disaster_types: ['earthquake', 'landslide', 'fire'] as DisasterType[]
+          },
+          {
+            name: 'Desert Region Relief Center',
+            address: 'Jaisalmer',
+            state: 'Rajasthan',
+            district: 'Jaisalmer',
+            city: 'Jaisalmer',
+            latitude: 26.9157,
+            longitude: 70.9083,
+            capacity: 350,
+            contact_number: '+91-2992-252406',
+            facilities: ['medical', 'food', 'water'],
+            disaster_types: ['drought', 'thunderstorm', 'fire'] as DisasterType[]
+          },
+          {
+            name: 'River Valley Emergency Center',
+            address: 'Guwahati',
+            state: 'Assam',
+            district: 'Kamrup',
+            city: 'Guwahati',
+            latitude: 26.1445,
+            longitude: 91.7362,
+            capacity: 650,
+            contact_number: '+91-361-2540644',
+            facilities: ['medical', 'food', 'water', 'electricity'],
+            disaster_types: ['flood', 'earthquake', 'thunderstorm'] as DisasterType[]
+          },
+          {
+            name: 'Kashmir Emergency Shelter',
+            address: 'Srinagar',
+            state: 'Jammu and Kashmir',
+            district: 'Srinagar',
+            city: 'Srinagar',
+            latitude: 34.0837,
+            longitude: 74.7973,
+            capacity: 550,
+            contact_number: '+91-194-2459300',
+            facilities: ['medical', 'food', 'water', 'electricity'],
+            disaster_types: ['earthquake', 'flood', 'landslide'] as DisasterType[]
+          },
+          {
+            name: 'Industrial Area Safety Center',
+            address: 'BHEL Township, Bhopal',
+            state: 'Madhya Pradesh',
+            district: 'Bhopal',
+            city: 'Bhopal',
+            latitude: 23.2599,
+            longitude: 77.4126,
+            capacity: 700,
+            contact_number: '+91-755-2578909',
+            facilities: ['medical', 'food', 'water', 'electricity', 'wifi'],
+            disaster_types: ['fire', 'earthquake', 'thunderstorm'] as DisasterType[]
+          },
+          {
+            name: 'Agricultural Region Relief Camp',
+            address: 'Patna',
+            state: 'Bihar',
+            district: 'Patna',
+            city: 'Patna',
+            latitude: 25.5941,
+            longitude: 85.1376,
+            capacity: 850,
+            contact_number: '+91-612-2219988',
+            facilities: ['medical', 'food', 'water'],
+            disaster_types: ['flood', 'drought', 'earthquake'] as DisasterType[]
           }
         ];
 

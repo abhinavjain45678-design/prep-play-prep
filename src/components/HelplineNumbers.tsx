@@ -99,6 +99,33 @@ export default function HelplineNumbers() {
 
       if (!existingData || existingData.length === 0) {
         const sampleHelplines = [
+          // National Emergency Numbers
+          {
+            disaster_type: 'earthquake' as DisasterType,
+            state: 'National',
+            helpline_name: 'National Emergency Response System',
+            phone_number: '112',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'fire' as DisasterType,
+            state: 'National',
+            helpline_name: 'Fire Brigade Emergency',
+            phone_number: '101',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'flood' as DisasterType,
+            state: 'National',
+            helpline_name: 'National Disaster Management Authority',
+            phone_number: '011-26701728',
+            is_toll_free: false,
+            is_24x7: true
+          },
+          
+          // State-wise Emergency Numbers
           {
             disaster_type: 'earthquake' as DisasterType,
             state: 'Uttarakhand',
@@ -126,7 +153,7 @@ export default function HelplineNumbers() {
           {
             disaster_type: 'fire' as DisasterType,
             state: 'Maharashtra',
-            helpline_name: 'Fire Brigade Mumbai',
+            helpline_name: 'Maharashtra Fire Services',
             phone_number: '101',
             is_toll_free: true,
             is_24x7: true
@@ -144,6 +171,102 @@ export default function HelplineNumbers() {
             state: 'West Bengal',
             helpline_name: 'West Bengal Disaster Management',
             phone_number: '1070',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'cyclone' as DisasterType,
+            state: 'Tamil Nadu',
+            helpline_name: 'Tamil Nadu Emergency Response',
+            phone_number: '1070',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'flood' as DisasterType,
+            state: 'Bihar',
+            helpline_name: 'Bihar Flood Control Room',
+            phone_number: '1077',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'earthquake' as DisasterType,
+            state: 'Gujarat',
+            helpline_name: 'Gujarat Emergency Services',
+            phone_number: '108',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'drought' as DisasterType,
+            state: 'Rajasthan',
+            helpline_name: 'Rajasthan Drought Relief',
+            phone_number: '1077',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'landslide' as DisasterType,
+            state: 'Himachal Pradesh',
+            helpline_name: 'HP Disaster Management',
+            phone_number: '1070',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'tsunami' as DisasterType,
+            state: 'Andhra Pradesh',
+            helpline_name: 'AP Coastal Emergency',
+            phone_number: '1077',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'cyclone' as DisasterType,
+            state: 'Andhra Pradesh',
+            helpline_name: 'AP Cyclone Warning Centre',
+            phone_number: '040-23422288',
+            is_toll_free: false,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'flood' as DisasterType,
+            state: 'Assam',
+            helpline_name: 'Assam Flood Control',
+            phone_number: '1077',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'earthquake' as DisasterType,
+            state: 'Jammu and Kashmir',
+            helpline_name: 'J&K Emergency Response',
+            phone_number: '1977',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'fire' as DisasterType,
+            state: 'Karnataka',
+            helpline_name: 'Karnataka Fire Emergency',
+            phone_number: '101',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'thunderstorm' as DisasterType,
+            state: 'Punjab',
+            helpline_name: 'Punjab Emergency Services',
+            phone_number: '1070',
+            is_toll_free: true,
+            is_24x7: true
+          },
+          {
+            disaster_type: 'flood' as DisasterType,
+            state: 'Uttar Pradesh',
+            helpline_name: 'UP Flood Management',
+            phone_number: '1077',
             is_toll_free: true,
             is_24x7: true
           }
