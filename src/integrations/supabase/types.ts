@@ -68,6 +68,66 @@ export type Database = {
         }
         Relationships: []
       }
+      emergency_id_cards: {
+        Row: {
+          address: string
+          blood_group: string | null
+          college_name: string
+          created_at: string
+          email: string
+          emergency_contact_name: string
+          emergency_contact_number: string
+          id: string
+          medical_conditions: string | null
+          mobile_number: string
+          nearest_hospital: string
+          nearest_police_station: string
+          nearest_shelter: string
+          student_id: string
+          student_name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address: string
+          blood_group?: string | null
+          college_name: string
+          created_at?: string
+          email: string
+          emergency_contact_name: string
+          emergency_contact_number: string
+          id?: string
+          medical_conditions?: string | null
+          mobile_number: string
+          nearest_hospital: string
+          nearest_police_station: string
+          nearest_shelter: string
+          student_id: string
+          student_name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string
+          blood_group?: string | null
+          college_name?: string
+          created_at?: string
+          email?: string
+          emergency_contact_name?: string
+          emergency_contact_number?: string
+          id?: string
+          medical_conditions?: string | null
+          mobile_number?: string
+          nearest_hospital?: string
+          nearest_police_station?: string
+          nearest_shelter?: string
+          student_id?: string
+          student_name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       emergency_shelters: {
         Row: {
           address: string
