@@ -4,10 +4,10 @@ import { Header } from "@/components/Header";
 import { DisasterCard } from "@/components/DisasterCard";
 import { expandedDisasters } from "@/data/expandedDisasters";
 import { Zap, Flame, Waves, Wind, Mountain, Snowflake, Droplets } from "lucide-react";
-import EarthquakeScene3D from "@/components/3d/EarthquakeScene3D";
-import FireScene3D from "@/components/3d/FireScene3D";
-import FloodScene3D from "@/components/3d/FloodScene3D";
-import TornadoScene3D from "@/components/3d/TornadoScene3D";
+import realEarthquake from "@/assets/real-earthquake.jpg";
+import realFire from "@/assets/real-fire.jpg";
+import realFlood from "@/assets/real-flood.jpg";
+import realTornado from "@/assets/real-tornado.jpg";
 
 const iconMap = {
   earthquake: <Zap className="w-6 h-6" />,
@@ -19,12 +19,6 @@ const iconMap = {
   blizzard: <Snowflake className="w-6 h-6" />,
 };
 
-const sceneMap = {
-  earthquake: EarthquakeScene3D,
-  fire: FireScene3D,
-  flood: FloodScene3D,
-  tornado: TornadoScene3D,
-};
 
 export default function Simulations() {
   const [language, setLanguage] = useState("en");
@@ -41,32 +35,38 @@ export default function Simulations() {
       <main className="container mx-auto px-4 py-8">
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl font-bold mb-4 text-primary">
-            {language === "en" ? "Disaster Simulations with 3D Effects" : "3D प्रभावों के साथ आपदा सिमुलेशन"}
+            {language === "en" ? "Disaster Simulations with Real Images" : "वास्तविक चित्रों के साथ आपदा सिमुलेशन"}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             {language === "en" 
-              ? "Experience realistic disaster scenarios with immersive 3D animations. Learn, make decisions, and improve your disaster preparedness skills."
-              : "रोमांचक 3D एनिमेशन के साथ वास्तविक आपदा परिदृश्यों का अनुभव करें। सीखें, निर्णय लें, और अपनी आपदा तैयारी कौशल में सुधार करें।"
+              ? "Experience realistic disaster scenarios with real images. Learn, make decisions, and improve your disaster preparedness skills."
+              : "वास्तविक चित्रों के साथ वास्तविक आपदा परिदृश्यों का अनुभव करें। सीखें, निर्णय लें, और अपनी आपदा तैयारी कौशल में सुधार करें।"
             }
           </p>
         </div>
 
-        {/* 3D Disaster Previews */}
+        {/* Real Disaster Images */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-8 text-center">
-            {language === "en" ? "Interactive 3D Disaster Models" : "इंटरैक्टिव 3D आपदा मॉडल"}
+            {language === "en" ? "Real Disaster Images" : "वास्तविक आपदा चित्र"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
               <h3 className="text-xl font-semibold flex items-center gap-2">
                 <Zap className="w-5 h-5 text-yellow-600" />
-                {language === "en" ? "Earthquake 3D Model" : "भूकंप 3D मॉडल"}
+                {language === "en" ? "Earthquake Damage" : "भूकंप क्षति"}
               </h3>
-              <EarthquakeScene3D />
+              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
+                <img 
+                  src={realEarthquake} 
+                  alt="Real earthquake damage showing collapsed buildings and cracked ground"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
               <p className="text-sm text-muted-foreground">
                 {language === "en" 
-                  ? "Watch buildings shake and ground crack in real-time. Click and drag to explore the scene."
-                  : "इमारतों को हिलते और जमीन को फटते देखें। दृश्य का पता लगाने के लिए क्लिक करें और खींचें।"
+                  ? "Real earthquake damage showing the devastating effects on buildings and infrastructure."
+                  : "वास्तविक भूकंप क्षति जो इमारतों और बुनियादी ढांचे पर विनाशकारी प्रभाव दिखाती है।"
                 }
               </p>
             </div>
@@ -74,13 +74,19 @@ export default function Simulations() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold flex items-center gap-2">
                 <Flame className="w-5 h-5 text-red-600" />
-                {language === "en" ? "Fire 3D Model" : "आग 3D मॉडल"}
+                {language === "en" ? "Wildfire Destruction" : "जंगली आग विनाश"}
               </h3>
-              <FireScene3D />
+              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
+                <img 
+                  src={realFire} 
+                  alt="Real wildfire with intense flames and smoke"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
               <p className="text-sm text-muted-foreground">
                 {language === "en" 
-                  ? "Experience realistic fire and smoke effects with dynamic flames and particles."
-                  : "गतिशील लपटों और कणों के साथ वास्तविक आग और धुआं प्रभाव का अनुभव करें।"
+                  ? "Real wildfire showing the intensity and destructive power of uncontrolled flames."
+                  : "वास्तविक जंगली आग जो अनियंत्रित लपटों की तीव्रता और विनाशकारी शक्ति दिखाती है।"
                 }
               </p>
             </div>
@@ -88,13 +94,19 @@ export default function Simulations() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold flex items-center gap-2">
                 <Waves className="w-5 h-5 text-blue-600" />
-                {language === "en" ? "Flood 3D Model" : "बाढ़ 3D मॉडल"}
+                {language === "en" ? "Flood Devastation" : "बाढ़ तबाही"}
               </h3>
-              <FloodScene3D />
+              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
+                <img 
+                  src={realFlood} 
+                  alt="Real flood with submerged buildings and rising water"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
               <p className="text-sm text-muted-foreground">
                 {language === "en" 
-                  ? "See rising waters, floating debris, and realistic rain effects in this flood simulation."
-                  : "इस बाढ़ सिमुलेशन में बढ़ते पानी, तैरते मलबे और वास्तविक बारिश के प्रभाव देखें।"
+                  ? "Real flood imagery showing submerged areas and the impact of rising waters."
+                  : "वास्तविक बाढ़ की तस्वीरें जो जलमग्न क्षेत्रों और बढ़ते पानी के प्रभाव को दिखाती हैं।"
                 }
               </p>
             </div>
@@ -102,13 +114,19 @@ export default function Simulations() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold flex items-center gap-2">
                 <Wind className="w-5 h-5 text-gray-600" />
-                {language === "en" ? "Tornado 3D Model" : "बवंडर 3D मॉडल"}
+                {language === "en" ? "Tornado Power" : "बवंडर शक्ति"}
               </h3>
-              <TornadoScene3D />
+              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
+                <img 
+                  src={realTornado} 
+                  alt="Real tornado funnel with destructive winds"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
               <p className="text-sm text-muted-foreground">
                 {language === "en" 
-                  ? "Watch a spinning tornado with flying debris and wind effects."
-                  : "उड़ते मलबे और हवा के प्रभावों के साथ एक घूमते बवंडर को देखें।"
+                  ? "Real tornado showing the massive funnel cloud and destructive wind patterns."
+                  : "वास्तविक बवंडर जो विशाल फ़नल क्लाउड और विनाशकारी हवा के पैटर्न को दिखाता है।"
                 }
               </p>
             </div>
@@ -142,8 +160,8 @@ export default function Simulations() {
             </h2>
             <p className="mb-6">
               {language === "en" 
-                ? "After experiencing these realistic 3D simulations, challenge yourself with adaptive quizzes!"
-                : "इन वास्तविक 3D सिमुलेशन का अनुभव करने के बाद, अनुकूली क्विज़ के साथ खुद को चुनौती दें!"
+                ? "After exploring these real disaster images, challenge yourself with adaptive quizzes!"
+                : "इन वास्तविक आपदा चित्रों का अन्वेषण करने के बाद, अनुकूली क्विज़ के साथ खुद को चुनौती दें!"
               }
             </p>
           </div>
