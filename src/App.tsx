@@ -10,6 +10,7 @@ import Quiz from "./pages/Quiz";
 import Emergency from "./pages/Emergency";
 import Admin from "./pages/Admin";
 import GovernmentAlerts from "./pages/GovernmentAlerts";
+import DisasterCaseStudies from "./pages/DisasterCaseStudies";
 import Achievements from "./pages/Achievements";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           <Route path="/government-alerts" element={<ProtectedRoute><GovernmentAlerts /></ProtectedRoute>} />
+          <Route path="/disaster-case-studies" element={<ProtectedRoute><DisasterCaseStudies /></ProtectedRoute>} />
           <Route path="/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

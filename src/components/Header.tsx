@@ -19,6 +19,7 @@ export function Header({ onLanguageChange, currentLanguage = "en" }: HeaderProps
     { name: "Simulations", path: "/simulations" },
     { name: "Quizzes", path: "/quiz" },
     { name: "Emergency Contacts", path: "/emergency" },
+    { name: "Case Studies", path: "/disaster-case-studies" },
     { name: "Achievements", path: "/achievements" },
     { name: "Admin Dashboard", path: "/admin" },
   ];
