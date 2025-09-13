@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, IdCard } from 'lucide-react';
+import { Loader2, IdCard, CreditCard } from 'lucide-react';
+import { EmergencyIDCardGenerator } from './EmergencyIDCardGenerator';
 
 interface IdCardData {
   student_name: string;
@@ -45,6 +46,7 @@ export const EmergencyIDCardForm = () => {
   const [saving, setSaving] = useState(false);
   const [id, setId] = useState<string | null>(null);
   const [data, setData] = useState<IdCardData>(initialState);
+  const [showIdCard, setShowIdCard] = useState(false);
 
   useEffect(() => {
     document.title = 'Emergency ID Card | SafeLearn';
@@ -89,6 +91,8 @@ export const EmergencyIDCardForm = () => {
             college_name: existing.college_name,
             address: existing.address,
           });
+          // Show ID card if data exists
+          setShowIdCard(true);
         }
       } catch (e: any) {
         console.error(e);
@@ -120,12 +124,18 @@ export const EmergencyIDCardForm = () => {
         if (error) throw error;
         toast({ title: 'Updated', description: 'Emergency ID card updated successfully.' });
       } else {
-        const { error } = await supabase
+        const { data: insertData, error } = await supabase
           .from('emergency_id_cards')
-          .insert([{ user_id: user.id, ...data }]);
+          .insert([{ user_id: user.id, ...data }])
+          .select('id')
+          .single();
         if (error) throw error;
+        setId(insertData.id);
         toast({ title: 'Saved', description: 'Emergency ID card created successfully.' });
       }
+      
+      // Show ID card after successful save
+      setShowIdCard(true);
     } catch (e: any) {
       console.error(e);
       toast({ title: 'Save failed', description: e.message, variant: 'destructive' });
@@ -138,6 +148,38 @@ export const EmergencyIDCardForm = () => {
     return (
       <div className="flex items-center justify-center py-16">
         <Loader2 className="w-6 h-6 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  // If showing ID card and data is filled
+  if (showIdCard && data.student_name) {
+    return (
+      <div className="space-y-6">
+        <Card className="bg-card">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-md gradient-primary">
+                  <CreditCard className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold">Your Emergency ID Card</h2>
+                  <p className="text-sm text-muted-foreground">Your emergency information is ready!</p>
+                </div>
+              </div>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowIdCard(false)}
+                className="text-sm"
+              >
+                Edit Details
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <EmergencyIDCardGenerator data={data} />
       </div>
     );
   }
@@ -214,8 +256,19 @@ export const EmergencyIDCardForm = () => {
 
           <div className="flex gap-3">
             <Button type="submit" disabled={saving}>
-              {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Saving...</> : 'Save'}
+              {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Saving...</> : 'Save & Generate ID Card'}
             </Button>
+            {id && (
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setShowIdCard(true)}
+                className="flex items-center gap-2"
+              >
+                <CreditCard className="w-4 h-4" />
+                View ID Card
+              </Button>
+            )}
           </div>
         </form>
       </CardContent>
