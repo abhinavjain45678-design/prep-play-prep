@@ -202,6 +202,16 @@ export const translations = {
       damage: "Damage",
       lessons: "Lessons Learned",
       preparedness: "Preparedness Measures"
+    },
+
+    // Admin Page
+    admin: {
+      title: "Admin Panel",
+      students: "Students",
+      performance: "Performance",
+      dashboard: "Admin Dashboard",
+      refresh: "Refresh",
+      exportData: "Export Data"
     }
   },
 
@@ -402,6 +412,16 @@ export const translations = {
       damage: "नुकसान",
       lessons: "सीखे गए सबक",
       preparedness: "तैयारी उपाय"
+    },
+
+    // Admin Page
+    admin: {
+      title: "एडमिन पैनल",
+      students: "छात्र",
+      performance: "प्रदर्शन",
+      dashboard: "एडमिन डैशबोर्ड",
+      refresh: "रिफ्रेश",
+      exportData: "डेटा निर्यात"
     }
   }
 };

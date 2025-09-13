@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from './useAuth';
 
 export interface Achievement {
   id: string;
@@ -98,6 +100,7 @@ const initialAchievements: Achievement[] = [
 ];
 
 export const useGameProgress = () => {
+  const { user } = useAuth();
   const [progress, setProgress] = useState<GameProgress>(() => {
     const saved = localStorage.getItem('gameProgress');
     if (saved) {
@@ -122,6 +125,14 @@ export const useGameProgress = () => {
     };
   });
 
+  // Load user progress from Supabase when user logs in
+  useEffect(() => {
+    if (user) {
+      loadUserProgress();
+    }
+  }, [user]);
+
+  // Save progress to both localStorage and Supabase
   useEffect(() => {
     localStorage.setItem('gameProgress', JSON.stringify({
       ...progress,
@@ -130,7 +141,81 @@ export const useGameProgress = () => {
         earnedAt: cert.earnedAt.toISOString()
       }))
     }));
-  }, [progress]);
+    
+    if (user) {
+      saveUserProgress();
+    }
+  }, [progress, user]);
+
+  const loadUserProgress = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('user_progress')
+        .select('*')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error loading user progress:', error);
+        return;
+      }
+
+      if (data) {
+        const achievements = Array.isArray(data.achievements) ? data.achievements as unknown as Achievement[] : initialAchievements;
+        const quizScores = Array.isArray(data.quiz_scores) ? data.quiz_scores as any[] : [];
+        const simulationScores = Array.isArray(data.simulation_scores) ? data.simulation_scores as any[] : [];
+        const certificates = Array.isArray(data.certificates) ? data.certificates as any[] : [];
+        
+        setProgress({
+          totalPoints: data.total_points || 0,
+          level: data.level || 1,
+          achievements: achievements,
+          completedSimulations: simulationScores.map((s: any) => s.id) || [],
+          completedQuizzes: quizScores.map((q: any) => q.id) || [],
+          streak: 0,
+          certificates: certificates.map((cert: any) => ({
+            ...cert,
+            earnedAt: new Date(cert.earnedAt)
+          })) || []
+        });
+      }
+    } catch (error) {
+      console.error('Error loading user progress:', error);
+    }
+  };
+
+  const saveUserProgress = async () => {
+    if (!user) return;
+
+    try {
+      const progressData = {
+        user_id: user.id,
+        total_points: progress.totalPoints,
+        level: progress.level,
+        achievements: progress.achievements as any,
+        quiz_scores: progress.completedQuizzes.map(id => ({ id, completed_at: new Date().toISOString() })) as any,
+        simulation_scores: progress.completedSimulations.map(id => ({ id, completed_at: new Date().toISOString() })) as any,
+        certificates: progress.certificates.map(cert => ({
+          ...cert,
+          earnedAt: cert.earnedAt.toISOString()
+        })) as any
+      };
+
+      const { error } = await supabase
+        .from('user_progress')
+        .upsert(progressData, {
+          onConflict: 'user_id'
+        });
+
+      if (error) {
+        console.error('Error saving user progress:', error);
+      }
+    } catch (error) {
+      console.error('Error saving user progress:', error);
+    }
+  };
 
   const addPoints = (points: number, source: string) => {
     setProgress(prev => {
@@ -165,6 +250,52 @@ export const useGameProgress = () => {
     // Generate certificate for good performance
     if (percentage >= 80) {
       generateCertificate('quiz', quizId, score, totalQuestions);
+    }
+
+    // Save quiz score to Supabase for admin dashboard
+    if (user) {
+      saveQuizScore(quizId, percentage);
+    }
+  };
+
+  const saveQuizScore = async (quizId: string, percentage: number) => {
+    if (!user) return;
+
+    try {
+      // Get current progress
+      const { data: currentProgress } = await supabase
+        .from('user_progress')
+        .select('quiz_scores')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      const existingScores = Array.isArray(currentProgress?.quiz_scores) ? currentProgress.quiz_scores : [];
+      const newScore = {
+        id: quizId,
+        percentage,
+        completed_at: new Date().toISOString()
+      };
+
+      const updatedScores = [...existingScores, newScore];
+
+      await supabase
+        .from('user_progress')
+        .upsert({
+          user_id: user.id,
+          quiz_scores: updatedScores
+        }, { onConflict: 'user_id' });
+
+      // Create or update user profile for admin dashboard
+      await supabase
+        .from('user_profiles')
+        .upsert({
+          user_id: user.id,
+          display_name: user.email?.split('@')[0] || 'Student',
+          email: user.email || ''
+        }, { onConflict: 'user_id' });
+
+    } catch (error) {
+      console.error('Error saving quiz score:', error);
     }
   };
 

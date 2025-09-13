@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { GameProgressBar } from "@/components/GameProgressBar";
 import { CertificateGenerator } from "@/components/CertificateGenerator";
@@ -11,6 +11,9 @@ import { Label } from "@/components/ui/label";
 import { Trophy, Award, Star, Lock, Download, User } from "lucide-react";
 import { useGameProgress } from "@/hooks/useGameProgress";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from '@/lib/translations';
+import { useUserProfile } from "@/hooks/useUserProfile";
 
 export default function Achievements() {
   const [language, setLanguage] = useState("en");
@@ -18,7 +21,36 @@ export default function Achievements() {
     localStorage.getItem('studentName') || 'Safety Hero'
   );
   const { progress } = useGameProgress();
+  const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation(language);
+  
+  // Create user profile if it doesn't exist
+  useUserProfile();
+
+  // Redirect to auth if not logged in and not loading
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/auth');
+    }
+  }, [user, authLoading, navigate]);
+
+  // Show loading state while auth is loading
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading your achievements...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render if user is not authenticated
+  if (!user) {
+    return null;
+  }
 
   const handleNameChange = (name: string) => {
     setStudentName(name);
