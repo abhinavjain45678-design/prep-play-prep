@@ -42,11 +42,13 @@ export default function Admin() {
   const loadStudentData = async () => {
     setLoading(true);
     try {
-      // Get user profiles and progress data
-      // Get user progress data only
+      // Get user profiles and progress data with profiles
       const { data: progressData, error: progressError } = await supabase
         .from('user_progress')
-        .select('*');
+        .select(`
+          *,
+          user_profiles!inner(display_name, email)
+        `);
 
       if (progressError) {
         console.error('Error loading student progress:', progressError);
@@ -55,7 +57,7 @@ export default function Admin() {
         return;
       }
 
-      const studentsData: StudentData[] = (progressData || []).map((progress, index) => {
+      const studentsData: StudentData[] = (progressData || []).map((progress: any, index) => {
         const quizScores = Array.isArray(progress.quiz_scores) ? progress.quiz_scores as any[] : [];
         const simulationScores = Array.isArray(progress.simulation_scores) ? progress.simulation_scores as any[] : [];
         
@@ -67,9 +69,11 @@ export default function Admin() {
           ? Math.round(simulationScores.reduce((sum: number, score: any) => sum + (score.percentage || 85), 0) / simulationScores.length)
           : 0;
 
+        const profileName = progress.user_profiles?.display_name || `Student ${index + 1}`;
+
         return {
           id: progress.user_id,
-          name: `Student ${index + 1}`,
+          name: profileName,
           class: `Class ${Math.floor(index / 3) + 8}${String.fromCharCode(65 + (index % 3))}`,
           simulationScore: avgSimulationScore || Math.floor(Math.random() * 40) + 60,
           quizScore: avgQuizScore || Math.floor(Math.random() * 40) + 60,

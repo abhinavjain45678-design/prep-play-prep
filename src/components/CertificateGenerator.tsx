@@ -10,6 +10,17 @@ interface CertificateGeneratorProps {
 }
 
 export const CertificateGenerator = ({ certificate, studentName = "Safety Hero" }: CertificateGeneratorProps) => {
+  // Validate certificate data
+  if (!certificate || !certificate.id || !certificate.title) {
+    return (
+      <Card className="text-center py-8">
+        <CardContent>
+          <p className="text-destructive">Invalid certificate data</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const getCertificateColor = () => {
     switch (certificate.level) {
       case 'Gold': return 'from-yellow-400 to-yellow-600';
@@ -143,7 +154,7 @@ export const CertificateGenerator = ({ certificate, studentName = "Safety Hero" 
             </div>
             
             <div className="text-sm text-white/80 mb-6">
-              Earned on: {certificate.earnedAt.toLocaleDateString()}
+              Earned on: {certificate.earnedAt ? new Date(certificate.earnedAt).toLocaleDateString() : 'Unknown date'}
             </div>
             
             <div className="border-t border-white/20 pt-4">

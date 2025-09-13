@@ -20,6 +20,9 @@ export default function Achievements() {
   const [studentName, setStudentName] = useState(() => 
     localStorage.getItem('studentName') || 'Safety Hero'
   );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
   const { progress } = useGameProgress();
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -35,13 +38,38 @@ export default function Achievements() {
     }
   }, [user, authLoading, navigate]);
 
-  // Show loading state while auth is loading
-  if (authLoading) {
+  // Initialize loading state
+  useEffect(() => {
+    if (!authLoading && user) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 1000); // Give time for progress to load
+      
+      return () => clearTimeout(timer);
+    }
+  }, [authLoading, user]);
+
+  // Show loading state while auth is loading or data is loading
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-muted-foreground">Loading your achievements...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-destructive mb-4">{error}</p>
+          <Button onClick={() => setError(null)} variant="outline">
+            Try Again
+          </Button>
         </div>
       </div>
     );
@@ -199,7 +227,7 @@ export default function Achievements() {
                 </p>
               </div>
 
-              {progress.certificates.length === 0 ? (
+              {!progress?.certificates || progress.certificates.length === 0 ? (
                 <Card className="text-center py-12">
                   <CardContent>
                     <Award className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
@@ -219,13 +247,26 @@ export default function Achievements() {
                 </Card>
               ) : (
                 <div className="space-y-8">
-                  {progress.certificates.map((certificate) => (
-                    <CertificateGenerator 
-                      key={certificate.id}
-                      certificate={certificate}
-                      studentName={studentName}
-                    />
-                  ))}
+                  {progress.certificates.map((certificate) => {
+                    try {
+                      return (
+                        <CertificateGenerator 
+                          key={certificate.id}
+                          certificate={certificate}
+                          studentName={studentName}
+                        />
+                      );
+                    } catch (err) {
+                      console.error('Error rendering certificate:', err);
+                      return (
+                        <Card key={certificate.id} className="text-center py-8">
+                          <CardContent>
+                            <p className="text-destructive">Error loading certificate</p>
+                          </CardContent>
+                        </Card>
+                      );
+                    }
+                  })}
                 </div>
               )}
             </TabsContent>
