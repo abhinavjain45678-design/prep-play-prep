@@ -8,6 +8,10 @@ import realEarthquake from "@/assets/real-earthquake-new.jpg";
 import realVolcano from "@/assets/real-volcano.jpg";
 import realFlood from "@/assets/real-flood-new.avif";
 import realCyclone from "@/assets/real-cyclone.webp";
+import earthquakeVideo from "@/assets/videos/earthquake.mp4";
+import volcanoVideo from "@/assets/videos/volcano.mp4";
+import floodVideo from "@/assets/videos/flood.mp4";
+import cycloneVideo from "@/assets/videos/cyclone.mp4";
 
 const iconMap = {
   earthquake: <Zap className="w-6 h-6" />,
@@ -56,11 +60,22 @@ export default function Simulations() {
                 <Zap className="w-5 h-5 text-yellow-600" />
                 {language === "en" ? "Earthquake Damage" : "भूकंप क्षति"}
               </h3>
-              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
+              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium relative group">
                 <img 
                   src={realEarthquake} 
                   alt="Real earthquake damage showing collapsed buildings and cracked ground"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+                <video 
+                  src={earthquakeVideo}
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  muted
+                  loop
+                  onMouseEnter={(e) => e.currentTarget.play()}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.pause();
+                    e.currentTarget.currentTime = 0;
+                  }}
                 />
               </div>
               <p className="text-sm text-muted-foreground">
@@ -76,11 +91,22 @@ export default function Simulations() {
                 <Mountain className="w-5 h-5 text-red-600" />
                 {language === "en" ? "Volcanic Eruption" : "ज्वालामुखी विस्फोट"}
               </h3>
-              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
+              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium relative group">
                 <img 
                   src={realVolcano} 
                   alt="Real volcanic eruption with lava and ash clouds"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+                <video 
+                  src={volcanoVideo}
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  muted
+                  loop
+                  onMouseEnter={(e) => e.currentTarget.play()}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.pause();
+                    e.currentTarget.currentTime = 0;
+                  }}
                 />
               </div>
               <p className="text-sm text-muted-foreground">
@@ -96,11 +122,22 @@ export default function Simulations() {
                 <Waves className="w-5 h-5 text-blue-600" />
                 {language === "en" ? "Flood Devastation" : "बाढ़ तबाही"}
               </h3>
-              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
+              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium relative group">
                 <img 
                   src={realFlood} 
                   alt="Real flood with submerged buildings and rising water"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+                <video 
+                  src={floodVideo}
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  muted
+                  loop
+                  onMouseEnter={(e) => e.currentTarget.play()}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.pause();
+                    e.currentTarget.currentTime = 0;
+                  }}
                 />
               </div>
               <p className="text-sm text-muted-foreground">
@@ -116,11 +153,22 @@ export default function Simulations() {
                 <Wind className="w-5 h-5 text-gray-600" />
                 {language === "en" ? "Cyclone Power" : "चक्रवात शक्ति"}
               </h3>
-              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium">
+              <div className="w-full h-64 rounded-xl overflow-hidden shadow-medium relative group">
                 <img 
                   src={realCyclone} 
                   alt="Real cyclone from space showing massive spiral formation"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+                <video 
+                  src={cycloneVideo}
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  muted
+                  loop
+                  onMouseEnter={(e) => e.currentTarget.play()}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.pause();
+                    e.currentTarget.currentTime = 0;
+                  }}
                 />
               </div>
               <p className="text-sm text-muted-foreground">
