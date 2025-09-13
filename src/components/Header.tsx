@@ -1,8 +1,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Globe, Menu, X } from "lucide-react";
+import { Shield, Globe, Menu, X, Sun, Moon, Monitor } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "@/lib/translations";
+import { useTheme } from "@/hooks/useTheme";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface HeaderProps {
   onLanguageChange?: (lang: string) => void;
@@ -13,15 +21,18 @@ export function Header({ onLanguageChange, currentLanguage = "en" }: HeaderProps
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation(currentLanguage);
+  const { theme, setTheme } = useTheme();
 
   const navigation = [
-    { name: "Home", path: "/" },
-    { name: "Simulations", path: "/simulations" },
-    { name: "Quizzes", path: "/quiz" },
-    { name: "Emergency Contacts", path: "/emergency" },
-    { name: "Case Studies", path: "/disaster-case-studies" },
-    { name: "Achievements", path: "/achievements" },
-    { name: "Admin Dashboard", path: "/admin" },
+    { name: t("nav.home"), path: "/" },
+    { name: t("nav.simulations"), path: "/simulations" },
+    { name: t("nav.quizzes"), path: "/quiz" },
+    { name: t("nav.emergency"), path: "/emergency" },
+    { name: t("nav.caseStudies"), path: "/disaster-case-studies" },
+    { name: t("nav.achievements"), path: "/achievements" },
+    { name: t("nav.emergencyId"), path: "/emergency-id" },
+    { name: t("nav.admin"), path: "/admin" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -36,8 +47,8 @@ export function Header({ onLanguageChange, currentLanguage = "en" }: HeaderProps
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-primary">SafeLearn</h1>
-              <p className="text-xs text-muted-foreground">Disaster Preparedness</p>
+              <h1 className="text-xl font-bold text-primary">{t("header.appName")}</h1>
+              <p className="text-xs text-muted-foreground">{t("header.tagline")}</p>
             </div>
           </div>
 
@@ -56,8 +67,34 @@ export function Header({ onLanguageChange, currentLanguage = "en" }: HeaderProps
             ))}
           </nav>
 
-          {/* Language Toggle & Mobile Menu */}
+          {/* Language Toggle, Theme Toggle & Mobile Menu */}
           <div className="flex items-center gap-2">
+            {/* Theme Toggle */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">{t("common.theme")}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  <Sun className="mr-2 h-4 w-4" />
+                  {t("common.lightMode")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  <Moon className="mr-2 h-4 w-4" />
+                  {t("common.darkMode")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  <Monitor className="mr-2 h-4 w-4" />
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Language Toggle */}
             <Button
               variant="outline"
               size="sm"
@@ -65,7 +102,7 @@ export function Header({ onLanguageChange, currentLanguage = "en" }: HeaderProps
               className="gap-2"
             >
               <Globe className="w-4 h-4" />
-              {currentLanguage === "en" ? "हिंदी" : "English"}
+              {currentLanguage === "en" ? t("header.switchToHindi") : t("header.switchToEnglish")}
             </Button>
             
             <Button
